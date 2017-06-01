@@ -41,7 +41,7 @@
                         <div class="form-group{{ $errors->has('snils') ? ' has-error' : '' }}">
                             <label for="snils" class="col-md-4 control-label">@lang('auth.snils')</label>
                             <div class="col-md-6">
-                                <input id="snils" type="text" class="form-control" name="snils" value="{{ old('snils') }}" required>
+                                <masked-input id="snils" name="snils" class="form-control" value="{{ old('snils') }}" :mask="[/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ' ', /\d/, /\d/]" placeholder-char="_" :show-mask="true"></masked-input>
                                 @if ($errors->has('snils'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('snils') }}</strong>

@@ -4,8 +4,14 @@
 
 @section('content')
     <div class="container">
-        <form class="form-horizontal" method="POST" action="{{ route('doctor-types.store') }}">
-
-        </form>
+        {!! Form::open(['route' => 'doctor-types.store']) !!}
+            <div class="form-group">
+                {{ Form::label('type', 'Тип') }}
+                {{ Form::text('type', old('type'), ['class' => 'form-control']) }}
+            </div>
+        <div class="form-group">
+            {{ Form::button('Добавить', ['type' => 'submit', 'class' => 'btn btn-primary']) }}
+        </div>
+        {!! Form::close() !!}
     </div>
 @endsection

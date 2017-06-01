@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Validators\SNILSValidator;
 use App\Visitor;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -58,18 +59,21 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
-    protected function create(array $data)
+    protected function create($data)
     {
+        $this->validate(request(), [
+            'snils' => 'required|snils'
+        ]);
         $user = new User([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
         $visitor = Visitor::create([
-        	'snils' => $data['snils']
+        	'snils' => SNILSValidator::clearSNILS($data['snils'])
         ]);
         $visitor->user()->save($user);
         return $user;

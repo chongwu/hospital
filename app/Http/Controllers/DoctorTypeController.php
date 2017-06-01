@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class DoctorTypeController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,17 +15,12 @@ class DoctorTypeController extends Controller
      */
     public function index()
     {
-        return view('doctortype.index', ['types' => DoctorType::all()]);
+        return view('doctortype.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getAll()
     {
-        return view('doctortype.create');
+        return response()->json(DoctorType::all());
     }
 
     /**
@@ -35,51 +31,38 @@ class DoctorTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $this->validate($request, [
+            'type' => 'required'
+        ]);
+        $doctorType = DoctorType::create($request->all());
+        return response()->json($doctorType);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param DoctorType $doctorType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, DoctorType $doctorType)
     {
-        //
+       $this->validate($request, [
+           'type' => 'required'
+       ]);
+       $doctorType->update($request->all());
+       return response()->json($doctorType);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param DoctorType $doctorType
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DoctorType $doctorType)
     {
-        //
+        $doctorType->delete();
+        return response('deleted');
     }
 }

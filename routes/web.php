@@ -19,6 +19,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function (){
 	Route::resource('doctors', 'DoctorController');
 	Route::resource('visitors', 'VisitorController');
+    Route::get('/doctor-types/get-all', 'DoctorTypeController@getAll')->middleware(\App\Http\Middleware\AllowOnlyAjax::class);
 	Route::resource('doctor-types', 'DoctorTypeController');
 	Route::resource('appointments', 'AppointmentController');
 });

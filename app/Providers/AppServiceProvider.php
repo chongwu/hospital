@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Barryvdh\Debugbar\ServiceProvider as DebugBarServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 	    Schema::defaultStringLength(191);
+	    \Validator::extend('snils', 'App\Validators\SNILSValidator@validate');
     }
 
     /**
@@ -24,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if($this->app->environment() === 'local'){
+            $this->app->register(IdeHelperServiceProvider::class);
+            $this->app->register(DebugBarServiceProvider::class);
+        }
     }
 }
