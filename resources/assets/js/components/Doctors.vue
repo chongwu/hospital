@@ -1,9 +1,7 @@
 <template>
     <div class="container">
         <h1>Врачи</h1>
-        <form action="" method="post" role="form">
-            <legend>Новый врач</legend>
-
+        <form method="post" role="form">
             <div class="form-group">
                 <label for="name" class="control-label">Ф.И.О.</label>
                 <input type="text" class="form-control" name="name" id="name" v-model="name" placeholder="Ф.И.О." required>
@@ -16,14 +14,16 @@
                 <label for="type" class="control-label">Тип</label>
                 <select name="type" id="type" v-model="type" class="form-control">
                     <option disabled value="">Выберите тип</option>
-                    <option v-for="type in types" v-bind:value="type.id">
+                    <option v-for="type in types" :value="type.id">
                         {{ type.type}}
                     </option>
                 </select>
             </div>
 
             <schedule-grid :schedule="schedule"></schedule-grid>
-            <button type="submit" class="btn btn-primary" v-on:click.prevent="addDoctor" :disabled="(!email || !name || !type)">Добавить</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" v-on:click.prevent="addDoctor" :disabled="(!email || !name || !type)">Добавить</button>
+            </div>
         </form>
         <table class="table table-bordered">
             <thead>
@@ -98,23 +98,23 @@
             'doctor-row': doctorRow
         },
         methods:{
-            clearForm(){
+            initForm(){
                 this.email = '';
                 this.name = '';
                 this.type = '';
                 this.schedule = [
-                    {dayName: 'Понедельник', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Вторник', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Среда', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Четверг', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Пятница', checked:false, start:'08:00', stop:'18:00'}
+                    {id: 1, dayName: 'Понедельник', checked:false, start:'08:00', stop:'18:00'},
+                    {id: 2, dayName: 'Вторник', checked:false, start:'08:00', stop:'18:00'},
+                    {id: 3, dayName: 'Среда', checked:false, start:'08:00', stop:'18:00'},
+                    {id: 4, dayName: 'Четверг', checked:false, start:'08:00', stop:'18:00'},
+                    {id: 5, dayName: 'Пятница', checked:false, start:'08:00', stop:'18:00'}
                 ];
             },
             addDoctor() {
                 axios.post('/doctors', {email: this.email, name:this.name, type: this.type, schedule: this.schedule})
                     .then(response => {
                         this.doctors.push(response.data);
-                        this.clearForm();
+                        this.initForm();
                     })
             },
             editDoctor(doctor) {
@@ -123,40 +123,32 @@
             },
             updateDoctor(doctorId){
                 axios.put('/doctors/'+doctorId, {email: this.fillItem.email, name:this.fillItem.name, type: this.fillItem.type, schedule: this.fillItem.schedule}).then(response => {
-                    let editedIndex = this.doctors.indexOf(_.find(this.doctors, {id: doctorId}));
-                    this.doctors.splice(editedIndex, 1, response.data);
+                    this.doctors.splice(this.doctors.indexOf(_.find(this.doctors, {id: doctorId})), 1, response.data);
                     this.fillItem = {id: '', email: '', name: '', type: '', schedule: []};
                     $('#edit-modal').modal('hide');
                 });
             },
             deleteDoctor(doctor) {
                 axios.delete('/doctors/'+doctor.id).then(response => {
-                    let deleteIndex = this.doctors.indexOf(doctor);
-                    this.doctors.splice(deleteIndex, 1);
+                    this.doctors.splice(this.doctors.indexOf(doctor), 1);
                 })
             }
         },
         mounted() {
+            this.initForm();
             axios.get('/doctors/get-all').then(response => {
                this.doctors = response.data;
             });
-            axios.get('/doctor-types/get-all')
-                .then(response => {
-                    this.types = response.data;
-                })
+            axios.get('/doctor-types/get-all').then(response => {
+                this.types = response.data;
+            })
         },
         data() {
             return {
                 email: '',
                 name: '',
                 type: '',
-                schedule: [
-                    {dayName: 'Понедельник', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Вторник', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Среда', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Четверг', checked:false, start:'08:00', stop:'18:00'},
-                    {dayName: 'Пятница', checked:false, start:'08:00', stop:'18:00'}
-                ],
+                schedule: [],
                 doctors: [],
                 types: [],
                 fillItem: {id: '', email: '', name: '', type: '', schedule: []}

@@ -14,11 +14,13 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import MaskedInput from 'vue-text-mask'
+import MaskedInput from 'vue-text-mask';
+import Datepicker from 'vuejs-datepicker';
 Vue.component('masked-input', MaskedInput);
+Vue.component('datepicker', Datepicker);
 Vue.component('type-table', require('./components/TypeTable.vue'));
 Vue.component('doctors', require('./components/Doctors.vue'));
-// Vue.component('example', require('./components/Example.vue'));
+Vue.component('appointment-form', require('./components/AppointmentForm.vue'));
 
 const app = new Vue({
     el: '#app'

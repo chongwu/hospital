@@ -21,6 +21,11 @@ return [
 	'snils' => 'СНИЛС',
 	'password' => 'Пароль',
 	'confirmPassword' => 'Повторите пароль',
-
-
+    'registerUser' => 'Зарегистрироваться',
+    'resetPassword' => 'Сбросить пароль',
+    'sendPasLink' => 'Отправить ссылку на сброс пароля',
+    'login' => 'Вход',
+    'remember' => 'Запомнить меня',
+    'forgotPass' => 'Забыли Ваш пароль?',
+    'logout' => 'Выйти'
 ];

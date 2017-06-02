@@ -9,7 +9,7 @@ class DoctorTypeController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
+     * Открытие страницы со списков специализации врачей
      *
      * @return \Illuminate\Http\Response
      */
@@ -24,7 +24,7 @@ class DoctorTypeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Получение полного перечня специализации врачей, которые ведут прием в системе
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -39,7 +39,7 @@ class DoctorTypeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Обновление информации о специализации
      *
      * @param  \Illuminate\Http\Request $request
      * @param DoctorType $doctorType
@@ -55,7 +55,7 @@ class DoctorTypeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Удаление информации о специализации
      *
      * @param DoctorType $doctorType
      * @return \Illuminate\Http\Response

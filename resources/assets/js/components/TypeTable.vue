@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="form-group">
-            <input id="new-type" type="text" class="form-control" v-model="newType" placeholder="Новый тип" v-on:keyup.enter="addNewType"/>
-            <a id="add-type" class="btn btn-primary" v-on:click.prevent="addNewType">Добавить тип</a>
+            <input id="new-type" type="text" class="form-control" v-model="newType" placeholder="Новая специализация" v-on:keyup.enter="addNewType"/>
+            <a id="add-type" class="btn btn-primary" v-on:click.prevent="addNewType">Добавить</a>
         </div>
         <table class="table table-bordered">
             <thead>
@@ -29,12 +29,12 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Изменение типа</h4>
+                        <h4 class="modal-title">Изменение специализации</h4>
                     </div>
                     <div class="modal-body">
                         <form method="POST" enctype="multipart/form-data" v-on:submit.prevent="updateRow(fillItem.id)">
                             <div class="form-group">
-                                <label for="edit-type">Тип врача:</label>
+                                <label for="edit-type">Специализация врача:</label>
                                 <input id="edit-type" type="text" name="type" class="form-control" v-model="fillItem.type"/>
                             </div>
 
@@ -58,11 +58,10 @@
         },
         methods: {
             addNewType(){
-                axios.post('/doctor-types', {type: this.newType})
-                    .then(response => {
-                        this.rows.push(response.data);
-                        this.newType = '';
-                    });
+                axios.post('/doctor-types', {type: this.newType}).then(response => {
+                    this.rows.push(response.data);
+                    this.newType = '';
+                });
             },
             editRow(row){
                 this.fillItem = {id: row.id, type: row.type};
@@ -71,25 +70,21 @@
             updateRow(rowId){
                 axios.put('doctor-types/'+rowId, {type: this.fillItem.type})
                     .then(response => {
-                        let editedRowIndex = this.rows.indexOf(_.find(this.rows, {id: rowId}));
-                        this.rows.splice(editedRowIndex, 1, response.data);
+                        this.rows.splice(this.rows.indexOf(_.find(this.rows, {id: rowId})), 1, response.data);
                         this.fillItem = {id : '', type: ''};
                         $('#edit-modal').modal('hide');
                     });
             },
             deleteRow(row){
-                axios.delete('doctor-types/'+row.id)
-                    .then(response => {
-                        let typeIndex = this.rows.indexOf(row);
-                        this.rows.splice(typeIndex, 1);
-                    });
+                axios.delete('doctor-types/'+row.id).then(response => {
+                    this.rows.splice(this.rows.indexOf(row), 1);
+                });
             }
         },
         mounted(){
-            axios.get('/doctor-types/get-all')
-                .then(response => {
-                    this.rows = response.data;
-                })
+            axios.get('/doctor-types/get-all').then(response => {
+                this.rows = response.data;
+            })
         },
         data() {
             return {

@@ -5,6 +5,15 @@ namespace App\Validators;
 
 class SNILSValidator
 {
+    /**
+     * Проверка контрольной суммы СНИЛСа
+     *
+     * @param $attribute
+     * @param $value
+     * @param $parameters
+     * @param $validator
+     * @return bool
+     */
     public function validate($attribute, $value, $parameters, $validator)
     {
         $clearedSNILS = self::clearSNILS($value);

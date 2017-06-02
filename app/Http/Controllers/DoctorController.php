@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class DoctorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Открытие заглавной страницы со списком докторов
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,24 +18,25 @@ class DoctorController extends Controller
         return view('doctor.index');
     }
 
+    /**
+     * Получение списка докторов
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
 	public function getAll() {
 		return response()->json(Doctor::all()->toArray());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Сохранение в БД только что добавленного доктора,
+     * паролем для доктора будет адрес эл. почты
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        /*$this->validate($request, [
-//        	'schedule' => 'required',
-	        'doctor_type_id' => 'required',
-	        'name' => 'required:string',
-	        'email' => 'required|email'
-        ]);*/
+
         $user = new User([
 	        'name' => $request->get('name'),
 	        'email' => $request->get('email'),
@@ -52,7 +53,7 @@ class DoctorController extends Controller
 
 
 	/**
-	 * Update the specified resource in storage.
+	 * Обновление информации о докторе
 	 *
 	 * @param  \Illuminate\Http\Request $request
 	 * @param Doctor $doctor
@@ -75,7 +76,7 @@ class DoctorController extends Controller
     }
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Удаление из БД информации о докторе
 	 *
 	 * @param Doctor $doctor
 	 *

@@ -16,7 +16,9 @@
     "jquery": "^3.1.1",
     "laravel-mix": "0.*",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "vue": "^2.1.10",
-    "vue-text-mask": "^5.1.1"
+    "vue-text-mask": "^5.1.1",
+    "vuejs-datepicker": "^0.7.12"
   }
 }

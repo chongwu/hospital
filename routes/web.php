@@ -11,15 +11,16 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'SiteController@index')->name('home');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function (){
+    Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
 	Route::get('/doctors/get-all', 'DoctorController@getAll')->middleware('ajax');
-	Route::resource('doctors', 'DoctorController');
-	Route::resource('visitors', 'VisitorController');
-    Route::get('/doctor-types', 'DoctorTypeController@index');
+	Route::resource('doctors', 'DoctorController', ['except' => ['create', 'edit', 'show', 'index'], 'middleware' => ['ajax']]);
+    Route::get('/doctor-types', 'DoctorTypeController@index')->name('doctor-types.index');
     Route::get('/doctor-types/get-all', 'DoctorTypeController@getAll')->middleware('ajax');
 	Route::resource('doctor-types', 'DoctorTypeController', ['except' => ['create', 'edit', 'show', 'index'], 'middleware' => ['ajax']]);
-	Route::resource('appointments', 'AppointmentController');
+	Route::post('/appointments/get-all', 'AppointmentController@getAll')->middleware('ajax');
+	Route::resource('appointments', 'AppointmentController',['only' => ['store'], 'middleware' => ['ajax']]);
 });

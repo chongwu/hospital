@@ -8,7 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class AllowOnlyAjax
 {
     /**
-     * Handle an incoming request.
+     * Miidleware, которы пропускает только ajax запросы
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
