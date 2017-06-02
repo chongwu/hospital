@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->nullableMorphs('roleable');
             $table->timestamps();
+	        $table->engine = 'InnoDB';
         });
     }
 

@@ -11,17 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function (){
+	Route::get('/doctors/get-all', 'DoctorController@getAll')->middleware('ajax');
 	Route::resource('doctors', 'DoctorController');
 	Route::resource('visitors', 'VisitorController');
-    Route::get('/doctor-types/get-all', 'DoctorTypeController@getAll')->middleware(\App\Http\Middleware\AllowOnlyAjax::class);
-	Route::resource('doctor-types', 'DoctorTypeController');
+    Route::get('/doctor-types', 'DoctorTypeController@index');
+    Route::get('/doctor-types/get-all', 'DoctorTypeController@getAll')->middleware('ajax');
+	Route::resource('doctor-types', 'DoctorTypeController', ['except' => ['create', 'edit', 'show', 'index'], 'middleware' => ['ajax']]);
 	Route::resource('appointments', 'AppointmentController');
 });
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -14,7 +14,7 @@ class Doctor extends Model
 	 * Получить тип доктора
 	 */
 	public function type() {
-		return $this->belongsTo(DoctorType::class);
+		return $this->belongsTo(DoctorType::class, 'doctor_type_id', 'id');
 	}
 
 	/**

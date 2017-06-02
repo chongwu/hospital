@@ -17,6 +17,7 @@ window.Vue = require('vue');
 import MaskedInput from 'vue-text-mask'
 Vue.component('masked-input', MaskedInput);
 Vue.component('type-table', require('./components/TypeTable.vue'));
+Vue.component('doctors', require('./components/Doctors.vue'));
 // Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({

@@ -18,6 +18,7 @@ class CreateVisitorsTable extends Migration
             $table->string('snils', 11);
             $table->timestamps();
             $table->index('snils');
+	        $table->engine = 'InnoDB';
         });
     }
 

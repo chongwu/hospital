@@ -90,9 +90,6 @@
                 .then(response => {
                     this.rows = response.data;
                 })
-                .catch(e => {
-
-                });
         },
         data() {
             return {

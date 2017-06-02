@@ -19,6 +19,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('visitor_id')->unsigned();
             $table->integer('doctor_id')->unsigned();
             $table->timestamps();
+	        $table->engine = 'InnoDB';
 	        $table->foreign('visitor_id')->references('id')->on('visitors')->onDelete('cascade');
 	        $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
         });

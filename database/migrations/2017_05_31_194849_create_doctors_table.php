@@ -18,6 +18,7 @@ class CreateDoctorsTable extends Migration
             $table->text('schedule');
             $table->integer('doctor_type_id')->unsigned();
             $table->timestamps();
+	        $table->engine = 'InnoDB';
             $table->foreign('doctor_type_id')->references('id')->on('doctor_types')->onDelete('cascade');
         });
     }
